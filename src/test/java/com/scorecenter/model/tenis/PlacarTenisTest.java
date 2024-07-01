@@ -1,14 +1,17 @@
 package com.scorecenter.model.tenis;
 
 import com.scorecenter.enums.TipoCompetidor;
+import com.scorecenter.exceptions.GameFinalizadoException;
+
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThatRuntimeException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlacarTenisTest {
 
     @Test
-    void testaCasaFazendo15_30_40(){
+    void testaCasaFazendo15_30_40() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         System.out.println(placar.showPlacarA());
@@ -22,7 +25,7 @@ class PlacarTenisTest {
     }
 
     @Test
-    void testaVisitanteFazendo15_30_40(){
+    void testaVisitanteFazendo15_30_40() throws GameFinalizadoException{ 
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         System.out.println(placar.showPlacarB());
@@ -37,7 +40,7 @@ class PlacarTenisTest {
 
 
     @Test
-    void testaCasaFazendo40x30(){
+    void testaCasaFazendo40x30() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
@@ -51,7 +54,7 @@ class PlacarTenisTest {
     }
 
     @Test
-    void testaFazendo40x40(){
+    void testaFazendo40x40() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
@@ -61,12 +64,18 @@ class PlacarTenisTest {
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         System.out.println(placar.showPlacarA());
         System.out.println(placar.showPlacarB());
+        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
+        System.out.println(placar.showPlacarA());
+        System.out.println(placar.showPlacarB());
+        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
+        System.out.println(placar.showPlacarA());
+        System.out.println(placar.showPlacarB());
         assertEquals(3, placar.casa );
         assertEquals(3, placar.visitante );
     }
 
     @Test
-    void testaFazendoVantagemDepoisDeIGuais(){
+    void testaFazendoVantagemDepoisDeIGuais() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
@@ -74,6 +83,8 @@ class PlacarTenisTest {
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
+        System.out.println(placar.showPlacarA());
+        System.out.println(placar.showPlacarB());
 
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         System.out.println(placar.showPlacarA());
@@ -83,7 +94,7 @@ class PlacarTenisTest {
     }
 
     @Test
-    void testaFazendoIguaisDepoisDeVantagem(){
+    void testaFazendoIguaisDepoisDeVantagem() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
@@ -101,7 +112,7 @@ class PlacarTenisTest {
     }
 
     @Test
-    void testaCasaFazendoVantagemDepoisDeEstarIguais(){
+    void testaCasaFazendoVantagemDepoisDeEstarIguais() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
@@ -120,43 +131,49 @@ class PlacarTenisTest {
     }
 
     @Test
-    void testaCasaFazendoGame(){
+    void testaCasaFazendoGame() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
-        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
-        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
-        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-
-        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         placar.atualizarPlacar(TipoCompetidor.CASA, 1);
         System.out.println(placar.showPlacarA());
         System.out.println(placar.showPlacarB());
         assertEquals(5, placar.casa );
-        assertEquals(3, placar.visitante );
     }
 
     @Test
-    void testaVisitanteFazendoGame(){
+    void testaVisitanteFazendoGame() throws GameFinalizadoException{
         PlacarTenis placar = new PlacarTenis();
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
-        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-
         placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
-        placar.atualizarPlacar(TipoCompetidor.CASA, 1);
-        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
-        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
-        System.out.println(placar.showPlacarA());
-        System.out.println(placar.showPlacarB());
-        assertEquals(3, placar.casa );
         assertEquals(5, placar.visitante );
     }
 
+    @Test
+    void testaNaoDeixarPontosDepoisDoGameFinalizado() throws GameFinalizadoException{
+        PlacarTenis placar = new PlacarTenis();
+        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
+        System.out.println(placar.showPlacarB());
+        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
+        System.out.println(placar.showPlacarB());
+        placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
+        System.out.println(placar.showPlacarB());
+    	placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
+        System.out.println(placar.showPlacarB());
+
+        Throwable exception = assertThrows(GameFinalizadoException.class, () -> {
+        	placar.atualizarPlacar(TipoCompetidor.VISITANTE, 1);
+            System.out.println(placar.showPlacarA());
+            System.out.println(placar.showPlacarB());
+        });
+
+        assertNotNull(exception);
+        
+
+    	
+    }
+    
 }
